@@ -1,0 +1,6 @@
+
+data_loader_name: train
+forward_type: test
+
+label_names: ['mu-', 'e-']
+prefix_plot_name: 'DEBUG_UT_val'

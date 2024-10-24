@@ -1,0 +1,31 @@
+
+transforms:
+
+  # - Apply thresholds - #
+  Threshold:
+    _target_: watchmal.dataset.gnn.transformations.Threshold
+
+    key: 'x'
+    max_thresholds: [null, 1000]
+    min_thresholds: [null, 0.15]
+
+
+  # - Normalize - #
+  Normalize:
+    _target_: watchmal.dataset.gnn.transformations.Normalize
+      
+    eps: !!float 1e-10
+    feat_norm: 
+      - [2000., 1000.]
+      - [550., 0.15]
+
+    target_norm:
+     - [1000]
+     - [100]
+
+  # - Wrap each data to a dictionnary when called by the loaders - #
+  ConvertAndToDict:
+    _target_: watchmal.dataset.gnn.transformations.ConvertAndToDict
+
+    feature_to_type: float32
+    target_to_type: float32

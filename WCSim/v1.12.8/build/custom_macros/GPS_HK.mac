@@ -1,0 +1,56 @@
+# HK with GPS
+
+/run/verbose 1
+/tracking/verbose 0
+/hits/verbose 0
+
+# GEOMETRY ===============================================================
+
+/WCSim/WCgeom HyperK_HybridmPMT_IDonly_Realistic
+
+/WCSim/Construct
+
+# PMTs ============================================
+
+/WCSim/PMTQEMethod     SensitiveDetector_Only
+
+/WCSim/PMTCollEff on
+
+/WCSim/SavePi0 false
+
+
+/DAQ/Digitizer SKI
+/DAQ/Trigger NDigits
+
+/control/execute macros/daq.mac
+
+
+/DarkRate/SetDetectorElement tank
+
+/DarkRate/SetDarkMode 1
+/DarkRate/SetDarkHigh 100000
+/DarkRate/SetDarkLow 0
+/DarkRate/SetDarkWindow 4000
+
+
+/mygen/generator gps
+/gps/particle mu-
+/gps/energy 1000 MeV
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/halfz 35 m
+/gps/pos/radius 0 m
+/gps/ang/type iso
+
+
+/WCSimIO/RootFile ../outputs/HK/30_mu-_1000MeV_GPS.root
+
+/WCSimIO/SaveRooTracker 0
+
+## set a timer running on WCSimRunAction
+#/WCSimIO/Timer false
+
+#/WCSim/random/seed 20230628
+/run/beamOn 30
+#exit
+

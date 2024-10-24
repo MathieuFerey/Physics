@@ -1,0 +1,66 @@
+# WCTE with GPS
+
+/run/verbose 1
+/tracking/verbose 0
+/hits/verbose 0
+
+# GEOMETRY ===============================================================
+
+/WCSim/mPMT/PMTtype_inner PMT3inchR14374_WCTE
+
+/WCSim/WCgeom nuPRISMBeamTest_16cShort_mPMT ## this is 16c4r from CAD
+/WCSim/Geometry/RotateBarrelHalfTower true
+
+/WCSim/PMT/ReplicaPlacement false
+
+/WCSim/PMT/PositionVariation 0 mm
+/WCSim/PMT/TankRadiusChange 0 0 0 mm
+
+/WCSim/PMT/PositionFile data/mPMT_Position_WCTE.txt
+
+/WCSim/Construct
+
+# PMTs ============================================
+
+/WCSim/PMTQEMethod     SensitiveDetector_Only
+
+/WCSim/PMTCollEff on
+
+/WCSim/SavePi0 false
+
+
+/DAQ/Digitizer SKI
+/DAQ/Trigger NDigits
+
+/control/execute macros/daq.mac
+
+
+/DarkRate/SetDetectorElement tank
+
+/DarkRate/SetDarkMode 1
+/DarkRate/SetDarkHigh 100000
+/DarkRate/SetDarkLow 0
+/DarkRate/SetDarkWindow 4000
+
+
+/mygen/generator gps
+/gps/particle mu-
+/gps/energy 1000 MeV
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/halfz 20 m
+/gps/pos/radius 0 m
+/gps/ang/type iso
+
+
+/WCSimIO/RootFile ../outputs/WCTE/30_mu-_1000MeV_GPS.root
+
+/WCSimIO/SaveRooTracker 0
+
+## set a timer running on WCSimRunAction
+#/WCSimIO/Timer false
+
+#/WCSim/random/seed 20230628
+/run/beamOn 30
+#exit
+

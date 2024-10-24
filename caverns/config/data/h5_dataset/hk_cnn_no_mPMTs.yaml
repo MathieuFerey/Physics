@@ -1,0 +1,14 @@
+
+split_path: /sps/t2k/eleblevec/updated_watchmal/index_lists/e_mu_500MeV_10each_index_list.npz
+
+dataset:
+  _target_: watchmal.dataset.cnn.cnn_dataset.CNNDataset
+  h5file: /sps/t2k/eleblevec/watchmal/DataTools/erwan_usage/h5_files/e_mu_500MeV_SDO_nomPMTs_10each_pmt_test.h5
+  pmt_positions_file: /sps/t2k/eleblevec/updated_watchmal/geometry_files/result_HK_PMT_image_positions.npz
+
+  use_times: True
+  use_charges: True
+  one_indexed: False
+
+  #collapse_arrays: False
+  transforms: null

@@ -1,0 +1,27 @@
+epochs: 5
+
+val_interval: 2
+num_val_batches: 1
+
+checkpointing: False
+
+data_loaders: # This yaml is just for testing the pipeline, no pin_memory even in gpu
+  train:
+    split_key: train_idxs
+    is_graph: False
+    drop_last: True
+
+    pin_memory: False
+    seed: 5
+    num_workers: 0
+    batch_size: 4
+
+  validation:
+    split_key: val_idxs
+    is_graph: False
+    drop_last: True
+    
+    pin_memory: False
+    seed: 5 
+    num_workers: 0
+    batch_size: 2

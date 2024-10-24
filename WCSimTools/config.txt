@@ -1,0 +1,34 @@
+#######
+#
+# Documentation about this file :
+#   Configuration file for wcsimroot_to_root 
+#
+#######
+
+
+###############
+# PATHS SETTINGS
+###############
+
+WCSIMROOT_FILE_PATH=/pbs/home/m/mferey/Physics/WCSim/v1.12.8/outputs/HK/30_mu-_1000MeV_GPS.root
+RESULT_FILE_PATH=/pbs/home/m/mferey/Physics/Data/HK/30_mu-_1000MeV_GPS.root
+
+
+###############
+# PARAMETERS
+###############
+
+EVENT_TYPE=1
+MAX_HITS_SIG=15000
+#MAX_HITS_BG=2000
+#MIN_DURATION_BG=9.999e5
+
+###############
+# VERBOSE
+###############
+# Must be set to a value (either 0, 1 or 2)
+VERBOSE=2
+
+
+
+

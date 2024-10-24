@@ -1,0 +1,37 @@
+{ decls }
+namespace std {  }
+
+[ libWCSimRoot.so ]
+# List of selected classes
+class JNuBeamFlux
+class NRooTrackerVtx
+class RooTrackerVtxBase
+class WCSimDarkNoiseOptions
+class WCSimEnumerations
+class WCSimPmtInfo
+class WCSimRootCapture
+class WCSimRootCaptureGamma
+class WCSimRootCherenkovDigiHit
+class WCSimRootCherenkovHit
+class WCSimRootCherenkovHitHistory
+class WCSimRootCherenkovHitTime
+class WCSimRootEvent
+class WCSimRootEventHeader
+class WCSimRootGeom
+class WCSimRootOptions
+class WCSimRootPMT
+class WCSimRootPi0
+class WCSimRootTrack
+class WCSimRootTrigger
+class map<std::string,WCSimDarkNoiseOptions>
+class map<string,WCSimDarkNoiseOptions,less<string>,allocator<pair<const string,WCSimDarkNoiseOptions> > >
+class map<string,WCSimDarkNoiseOptions>
+class pair<std::string,WCSimDarkNoiseOptions>
+class pair<string,WCSimDarkNoiseOptions>
+header TJNuBeamFlux.hh
+header TNRooTrackerVtx.hh
+header WCSimRootOptions.hh
+header WCSimEnumerations.hh
+header WCSimPmtInfo.hh
+header WCSimRootEvent.hh
+header WCSimRootGeom.hh

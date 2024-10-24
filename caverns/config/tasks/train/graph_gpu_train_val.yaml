@@ -1,0 +1,29 @@
+
+epochs: 1000
+val_interval: 75 
+# Print status on the gradient descent every val_interval step
+# + wandb global log (gradients + parameters) every 2 * val_interval
+
+checkpointing: False
+
+# the parameters are given to get_data_loader in data_utils.py
+data_loaders:
+
+  train:
+    split_key: train_idxs 
+    is_graph: True
+    drop_last: True 
+
+    pin_memory: True
+    seed: 5
+    num_workers: 3   
+    batch_size: 300
+    
+  validation:
+    split_key: val_idxs
+    is_graph: True
+    drop_last: True 
+
+    pin_memory: True
+    num_workers: 3 
+    batch_size: 300

@@ -1,0 +1,28 @@
+2024-10-17 16:46:11,051 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Current SDK version is 0.16.5
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Configure stats pid to 1995270
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Loading settings from /pbs/home/m/mferey/.config/wandb/settings
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Loading settings from /pbs/home/m/mferey/ML/caverns/outputs/2024-10-17/16-46-08/wandb/settings
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'WatChMaL/main.py', 'program_abspath': '/pbs/home/m/mferey/ML/caverns/WatChMaL/main.py', 'program': '/pbs/home/m/mferey/ML/caverns/WatChMaL/main.py'}
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_init.py:_log_setup():527] Logging user logs to /pbs/home/m/mferey/ML/caverns/outputs/2024-10-17/16-46-08/wandb/run-20241017_164611-zlsnj4s1/logs/debug.log
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_init.py:_log_setup():528] Logging internal logs to /pbs/home/m/mferey/ML/caverns/outputs/2024-10-17/16-46-08/wandb/run-20241017_164611-zlsnj4s1/logs/debug-internal.log
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_init.py:init():567] calling init triggers
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_init.py:init():574] wandb.init called with sweep_config: {}
+config: {}
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_init.py:init():617] starting backend
+2024-10-17 16:46:11,052 INFO    MainThread:1995270 [wandb_init.py:init():621] setting up manager
+2024-10-17 16:46:11,061 INFO    MainThread:1995270 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-10-17 16:46:11,065 INFO    MainThread:1995270 [wandb_init.py:init():629] backend started and connected
+2024-10-17 16:46:11,081 INFO    MainThread:1995270 [wandb_init.py:init():721] updated telemetry
+2024-10-17 16:46:11,100 INFO    MainThread:1995270 [wandb_init.py:init():754] communicating run to backend with 90.0 second timeout
+2024-10-17 16:46:11,389 ERROR   MainThread:1995270 [wandb_init.py:init():780] encountered error: It appears that you do not have permission to access the requested resource. Please reach out to the project owner to grant you access. If you have the correct permissions, verify that there are no issues with your networking setup.(Error 403: Forbidden)
+2024-10-17 16:46:11,448 ERROR   MainThread:1995270 [wandb_init.py:init():1205] It appears that you do not have permission to access the requested resource. Please reach out to the project owner to grant you access. If you have the correct permissions, verify that there are no issues with your networking setup.(Error 403: Forbidden)
+Traceback (most recent call last):
+  File "/pbs/home/m/mferey/miniconda3/envs/watchmal/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 1187, in init
+    run = wi.init()
+  File "/pbs/home/m/mferey/miniconda3/envs/watchmal/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 786, in init
+    raise error
+wandb.errors.CommError: It appears that you do not have permission to access the requested resource. Please reach out to the project owner to grant you access. If you have the correct permissions, verify that there are no issues with your networking setup.(Error 403: Forbidden)
+2024-10-17 16:46:12,451 WARNING MsgRouterThr:1995270 [router.py:message_loop():77] message_loop has been closed

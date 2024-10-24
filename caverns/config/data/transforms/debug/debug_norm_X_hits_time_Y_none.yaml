@@ -1,0 +1,23 @@
+
+transforms:
+
+  # - Normalize - #
+  Normalize:
+    _target_: watchmal.dataset.gnn.transformations.Normalize
+        
+    feat_norm: 
+      - [3255., 3255., 3300., 2000.]
+      - [-3255., -3255.,  -3300., 550.]
+
+  MapLabels: # Should always be activated when performing classification, even if useless.
+    _target_: watchmal.dataset.gnn.transformations.MapLabels
+    label_set:
+      - 0
+      - 1
+
+  # - Convert + Wrap each data to a dictionnary when called by the loaders - #
+  ConvertAndToDict:
+    _target_: watchmal.dataset.gnn.transformations.ConvertAndToDict
+
+    feature_to_type: float32
+    target_to_type: int64 

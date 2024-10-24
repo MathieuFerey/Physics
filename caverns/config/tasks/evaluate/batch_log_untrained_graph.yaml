@@ -1,0 +1,17 @@
+
+prefix_for_plot_names: untrained_
+
+report_interval: 30
+batch_log: True
+
+
+data_loaders:
+  test:
+    split_key: test_idxs
+    is_graph: True
+    drop_last: True 
+
+    pin_memory: True
+    seed: null
+    num_workers: 3
+    batch_size: 800

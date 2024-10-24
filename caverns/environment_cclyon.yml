@@ -1,0 +1,26 @@
+name: watchmal
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+  - pyg
+  - defaults
+dependencies:
+  - numpy=1.24.3
+  - python=3.10
+  - pytorch-cuda=12.1
+  - pytorch=2.2.0
+  - pyg=2.5.0
+  - pytorch-cluster=1.6.3
+  - pytorch-scatter=2.1.2
+  - hydra-core
+  - omegaconf
+  - h5py
+  - tabulate
+  - seaborn=0.13.2
+  - matplotlib=3.8.4
+  - plotly
+  - wandb=0.16.5
+  - pip
+  - pip:
+    - uproot==5.3.1

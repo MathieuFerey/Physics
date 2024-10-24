@@ -1,0 +1,17 @@
+prefix_for_plot_names: debug_trained_
+
+
+report_interval: 1
+batch_log: True
+
+data_loaders:
+  test:
+    split_key: test_idxs
+    is_graph: True
+    drop_last: True 
+
+    pin_memory: False
+    seed: null
+    num_workers: 0
+    batch_size: 2
+    

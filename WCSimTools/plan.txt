@@ -1,0 +1,67 @@
+
+
+
+------------------- Code en cours  -------------------
+
+## AAA ## Remettre getEntry(0) et demander aux autres pq (Antoine)
+
+
+get_data_from_root : 
+	regarder définition MAX_HIT_SIG vs n_hits dans la déclaration des branches. Est-ce que créer des tableaux de cette taille est vraiment utile ? (Pour plus tard ?)
+	Créé 1999 event à partir de 2000. Pourquoi ?
+	Changer les nominations (WCSIMroot au lieu de root par ex)
+
+    nevents = wcsimT->GetEntries();	
+        for(int i=0 ; i<nevents ; i++)
+        {
+            // Load the i^th event into wcsimrootsuperevent
+            // Pourquoi on ne fait pas branch -> GetEvent(i) plutôt ?
+            wcsimT->GetEvent(i);    
+
+root_to_h5 :
+
+
+-------------------- Remarques temps long -------------------
+On peut trouver des géométries de détecteurs dans les sources du git de  wcsim
+
+RootDataset en plus de h5Dataset sur WatchMaL (permet de conserver les deux manières d'obtenir les données, 
+sans bouleverser aucun programme)
+
+Benjamin veut une classe -> Voir que récupérer dans le code de Lorenzo pour ça ?
+
+######
+POUR LES HAUTES ÉNERGIES
+######
+
+- OÙ EST-CE QUE LE PROGRAMME PASSE LE PLUS DE TEMPS ?
+- SAUVEGARDER AU FORMAT H5 DIRECTEMENT ?
+- QUAND FAIRE LA NORMALISATION ETC...
+- VOIR LA FUSION DE MULTIPLE FICHIERS ROOT
+
+Programme 1 :
+    Extraire les données qui nous intéressent du WCSimRoot dans un root
+Programme 2 :
+    Étape 1
+        Fusion de 2 fichiers root (après être passés par l'étape 1)
+    Étape 2 
+        Fusion de n fichiers (donner un dossier en paramètre)
+Programme 3 :
+    Conversion root (pur) -> h5
+
+
+
+-- Extraction des données dans un root : DIFFÉRENCES SELON LA TÂCHE SIGNAL / BRUIT
+- Un fichier c++ pour extraire les données des root de particules
+- Un fichier c++ manipuler les root de bruit
+
+--> Pas les mêmes données dans les .root, pas possible d'extraires des données définies dans le code source
+Soit un paramètre qui dit quelles données extraires, soit deux programmes avec les données définies dans le code source
+
+
+
+#####
+POUR LES BASES ÉNERGIES
+#####
+
+Tester un VAE (à graph) sur du bruit 
+Voir comment utiliser des flow NF + Diffusion + d'autres trucs ?

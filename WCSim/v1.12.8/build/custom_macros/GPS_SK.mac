@@ -1,0 +1,55 @@
+# SK with GPS
+
+# Geometry ========================================
+
+# Use SK geometry by default
+
+# PMTs ================================================
+
+/WCSim/PMTQEMethod     SensitiveDetector_Only
+/WCSim/PMTCollEff on
+/WCSim/SavePi0 false
+
+# Electronics =============================
+
+/DAQ/Digitizer SKI
+/DAQ/Trigger NDigits
+/control/execute macros/daq.mac
+
+# Dark noise ============================
+
+/DarkRate/SetDetectorElement tank
+/DarkRate/SetDarkMode 1
+/DarkRate/SetDarkWindow 4000
+
+/DarkRate/SetDetectorElement OD
+/DarkRate/SetDarkMode 1
+/DarkRate/SetDarkWindow 4000
+
+/DarkRate/SetDetectorElement tankPMT2
+/DarkRate/SetDarkMode 1
+/DarkRate/SetDarkWindow 4000
+
+# Generate particles ======================
+
+
+# General Particle Source
+/mygen/generator gps
+/gps/particle mu-
+/gps/energy 1000 MeV
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/halfz 20 m
+/gps/pos/radius 0 m
+/gps/ang/type iso
+
+
+# Output =======================
+
+/WCSimIO/SaveRooTracker 0
+/WCSimIO/RootFile ../outputs/SK/30_mu-_1000MeV_GPS.root
+
+
+# Number of runs
+
+/run/beamOn 30

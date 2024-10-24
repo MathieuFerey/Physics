@@ -1,0 +1,22 @@
+master_port: 12356 # 12355 initial value
+gpu_list: [] 
+
+kind: gnn
+launch_wandb: True
+
+defaults:
+    - data/dataset: debug_graph_classification_X_hits_t_Y_eventType
+    - data/transforms: debug_norm_X_hits_time_Y_none
+
+    # Order matters
+    - tasks/evaluate: debug_untrained_graph
+
+    - sampler@tasks.evaluate.data_loaders.test.sampler_config: subset_sequential
+    - loss@tasks.evaluate.loss: cross_entropy
+
+    - model: debug_resgated_classification_4in_2out
+    - engine: debug_gnn_classifier
+
+    - wandb: debug_wandb
+
+    - _self_

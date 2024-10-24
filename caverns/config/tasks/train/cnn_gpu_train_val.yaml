@@ -1,0 +1,31 @@
+epochs: 500
+
+val_interval: 10
+num_val_batches: 40
+
+checkpointing: False
+
+data_loaders:
+  train:
+    split_key: train_idxs
+    is_graph: False
+    drop_last: True
+
+    pin_memory: True
+    seed: 5
+    num_workers: 2
+    batch_size: 512
+
+    #pre_transforms: ne sert à rien comme il n'a aucune transformations d'implémentée 
+    #  - random_reflections
+    
+  validation:
+    split_key: val_idxs
+    is_graph: False
+    drop_last: True
+
+    pin_memory: True
+    seed: 5
+    num_workers: 2
+    batch_size: 512
+

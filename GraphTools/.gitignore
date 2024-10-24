@@ -1,0 +1,14 @@
+#processed file issued from the running of main.py
+processed/
+
+#pycache
+src/__pycache__
+
+# config files
+*.yaml
+
+# archived files
+src/archive
+
+# wandb logs
+wandb/

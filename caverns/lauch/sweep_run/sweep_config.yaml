@@ -1,0 +1,46 @@
+program: /sps/t2k/eleblevec/updated_watchmal/lauch/sweep_run/run_watchmal.sh
+
+method: random
+
+
+metric:
+  name: val_loss
+  goal: minimize
+
+parameters:
+
+  # /data/dataset
+  # data-dataset-parameters-config-graph_dataset_path: 
+  #   value: /sps/t2k/eleblevec/datasets/graph_datasets/e_mu_500MeV_10each
+  # data-dataset-parameters-config-root_file_path: 
+  #   value: /sps/t2k/eleblevec/datasets/root_datasets/before_april/e_mu_500MeV_10events_each.root
+  # data-dataset-parameters-config-train_keys: 
+  #   value: ['time', 'charge']
+
+
+  # /data/transforms
+  # data-transforms-pre_transforms-kNN-k: 
+  #   value: 7
+
+  # /model
+  model-dropout: 
+    values: [0., 0.2, 0.5]
+  model-conv_in_channels:
+    values : [[4, 16], [8, 64]]
+  model-linear_out_features:
+    values: [[64, 8, 2], [8, 2]]
+
+  # /optimizers
+  tasks-train-optimizers-lr: 
+    values: [!!float 1e-3, !!float 5e-4, !!float 1e-4, !!float 1e-5]
+  
+  # /tasks/train
+  tasks-train-val_interval:
+    values: [5, 10]
+  tasks-train-data_loaders-train-batch_size: 
+    values: [6, 10]
+
+
+command:
+ - /usr/bin/bash
+ - ${program}

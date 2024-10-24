@@ -1,0 +1,112 @@
+data:
+  dataset:
+    split_path: /sps/t2k/eleblevec/updated_watchmal/index_lists/debug_big_test_emu_500MeV_10each_train_val_test.npz
+    fully_processed: true
+    compute_edges_parameters: null
+    target_names:
+    - energy
+    dataset_parameters:
+      _target_: watchmal.dataset.gnn.dataset_from_processed.DatasetFromProcessed
+      graph_folder_path: /sps/t2k/eleblevec/datasets/graph_datasets/regression/debug_e_20_100_1kMev_X_t_c_Y_energy_Ed_hits_from1
+      graph_file_names:
+      - data.pt
+      verbose: 1
+  transforms:
+    transforms:
+      Threshold:
+        _target_: watchmal.dataset.gnn.transformations.Threshold
+        key: x
+        max_thresholds:
+        - null
+        - 1000
+        min_thresholds:
+        - null
+        - 0.15
+      Normalize:
+        _target_: watchmal.dataset.gnn.transformations.Normalize
+        eps: 1.0e-10
+        feat_norm:
+        - - 2000.0
+          - 1000.0
+        - - 550.0
+          - 0.15
+        target_norm:
+        - - 1000
+        - - 100
+      ConvertAndToDict:
+        _target_: watchmal.dataset.gnn.transformations.ConvertAndToDict
+        feature_to_type: float32
+        target_to_type: float32
+tasks:
+  train:
+    epochs: 20
+    val_interval: 1
+    checkpointing: false
+    data_loaders:
+      train:
+        split_key: train_idxs
+        is_graph: true
+        drop_last: true
+        pin_memory: false
+        seed: 4
+        num_workers: 0
+        batch_size: 15
+        sampler_config:
+          _target_: watchmal.dataset.samplers.samplers.SubsetRandomSampler
+      validation:
+        split_key: val_idxs
+        is_graph: true
+        drop_last: true
+        pin_memory: false
+        num_workers: 0
+        batch_size: 2
+        sampler_config:
+          _target_: watchmal.dataset.samplers.samplers.SubsetSequentialSampler
+    loss:
+      _target_: torch.nn.MSELoss
+    optimizers:
+      _target_: torch.optim.Adam
+      lr: 0.0005
+      weight_decay: 0
+  restore_best_state:
+    name: null
+  evaluate:
+    prefix_for_plot_names: debug_trained_
+    report_interval: 1
+    batch_log: true
+    data_loaders:
+      test:
+        split_key: test_idxs
+        is_graph: true
+        drop_last: true
+        pin_memory: false
+        seed: null
+        num_workers: 0
+        batch_size: 2
+        sampler_config:
+          _target_: watchmal.dataset.samplers.samplers.SubsetSequentialSampler
+model:
+  _target_: watchmal.model.grant_gnn.ResGateConv_v2
+  in_channels: 2
+  conv_in_channels:
+  - 8
+  - 32
+  linear_out_features:
+  - 32
+  - 1
+  dropout: 0.0
+engine:
+  _target_: watchmal.engine.regression.RegressionEngine
+  truth_key: target
+wandb:
+  entity: mferey
+  project: caverns_debug
+  tags:
+  - debug
+  - regression
+  job_type: debug première installation
+  notes: :)))))
+master_port: 12356
+gpu_list: []
+kind: gnn
+launch_wandb: true

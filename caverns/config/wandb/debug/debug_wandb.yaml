@@ -1,0 +1,11 @@
+
+
+entity: ferey-mathieu
+project: caverns_debug
+
+tags: 
+  - debug
+  - regression
+
+job_type: debug première installation
+notes: ":)))))"
