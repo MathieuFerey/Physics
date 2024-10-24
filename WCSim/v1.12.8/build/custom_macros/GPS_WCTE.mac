@@ -42,18 +42,24 @@
 /DarkRate/SetDarkLow 0
 /DarkRate/SetDarkWindow 4000
 
+# Generate Particles =============================
 
 /mygen/generator gps
 /gps/particle mu-
-/gps/energy 1000 MeV
+
 /gps/pos/type Volume
 /gps/pos/shape Cylinder
 /gps/pos/halfz 20 m
 /gps/pos/radius 0 m
 /gps/ang/type iso
 
+/gps/ene/type Lin
+/gps/ene/min 200 MeV
+/gps/ene/max 1000 MeV
+/gps/ene/intercept 1
 
-/WCSimIO/RootFile ../outputs/WCTE/30_mu-_1000MeV_GPS.root
+
+/WCSimIO/RootFile ../outputs/WCTE/10_mu-_uni200-1000MeV_GPS.root
 
 /WCSimIO/SaveRooTracker 0
 
@@ -61,6 +67,6 @@
 #/WCSimIO/Timer false
 
 #/WCSim/random/seed 20230628
-/run/beamOn 30
+/run/beamOn 10
 #exit
 

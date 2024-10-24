@@ -166,7 +166,6 @@ vector<double> get_signal_from_WCSim(string infilename, string outfilename, cons
   nevents = wcsimT->GetEntries();	
 
 
-
   if (verbose >= 1) {
     vector<double> PMTradius(2);
     

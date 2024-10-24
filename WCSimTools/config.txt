@@ -10,8 +10,8 @@
 # PATHS SETTINGS
 ###############
 
-WCSIMROOT_FILE_PATH=/pbs/home/m/mferey/Physics/WCSim/v1.12.8/outputs/HK/30_mu-_1000MeV_GPS.root
-RESULT_FILE_PATH=/pbs/home/m/mferey/Physics/Data/HK/30_mu-_1000MeV_GPS.root
+WCSIMROOT_FILE_PATH=/pbs/home/m/mferey/Physics/WCSim/v1.12.8/outputs/WCTE/10_mu-_uni200-1000MeV_GPS.root
+RESULT_FILE_PATH=/pbs/home/m/mferey/Physics/Data/WCTE/10_mu-_uni200-1000MeV_GPS.root
 
 
 ###############

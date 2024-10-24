@@ -13,7 +13,10 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 experiment = 'WCTE' # 'SK' or 'HK' or 'WCTE'
 
 path2events = '../Data/' + experiment + '/'
-events_file = '30_mu-_1000MeV_GPS.root'
+events_file = '10_mu-_uni200-1000MeV_GPS.root'
+
+events_to_display = 'all' # 'all' to display all events, or tuple (event_start, event_end) to display all events between the event_start'th to the event_end'th events, or int event_index to only display the event_index'th event
+
 
 
 # Some useful detector dimensions (in cm) ======================================================================================
@@ -272,7 +275,6 @@ def show_event_display(path2events, events_file, detector_geom, experiment, even
 
 # Main ===========================================================================================
 
-events_to_display = 'all' # 'all' to display all events, or tuple (event_start, event_end) to display all events between the event_start'th to the event_end'th events, or int event_index to only display the event_index'th event
 
 show_event_display(path2events, events_file, detector_geom, experiment, events_to_display=events_to_display)
   
