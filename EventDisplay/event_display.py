@@ -93,7 +93,43 @@ def project2d(x, y, z, detector_geom, experiment) : # project 3D PMT positions o
   return np.array(xproj),np.array(yproj)
 
 
-def load_data(path2events, events_file, detector_geom, experiment) : # load data from root file and project it to 2D
+
+def events_index_bounds(events_to_display, n_events) : # get the bounds of the events to display
+
+  if events_to_display == 'all' : # display all events
+      event_start = 0
+      event_end = n_events
+
+  elif isinstance(events_to_display, tuple) : # display only a subrange of events
+
+    if events_to_display[0] < 0 or events_to_display[1] > n_events or events_to_display[0] > events_to_display[1] :
+      print('Error: events index out of bounds. Displaying first event instead.')
+      event_start = 0
+      event_end = 1
+    
+    event_start = events_to_display[0]
+    event_end = events_to_display[1]
+    
+  elif isinstance(events_to_display, int) : # display only one event
+
+    if events_to_display < 0 or events_to_display >= n_events :
+      print('Error: event index out of bounds. Displaying first event instead.')
+      event_start = 0
+      event_end = 1
+
+    event_start = events_to_display
+    event_end = events_to_display + 1
+
+  else :
+    print('Error: events_to_display should be an integer, a tuple or "all". Displaying first event instead.')
+    event_start = 0
+    event_end = 1
+
+  return event_start, event_end
+
+    
+
+def load_data(path2events, events_file, detector_geom, experiment, events_to_display='all') : # load data from root file and project it to 2D
 
     print('Loading data...')
     file = up.open(path2events + events_file)
@@ -104,12 +140,17 @@ def load_data(path2events, events_file, detector_geom, experiment) : # load data
     hitx = events_root['hitx'].array(library='np')
     hity = events_root['hity'].array(library='np')
     hitz = events_root['hitz'].array(library='np')
+    charge = events_root['charge'].array(library='np')
+    time = events_root['time'].array(library='np')
 
-    events_dic = {'xproj': [], 'yproj': [], 'charge': events_root['charge'].array(), 'time': events_root['time'].array()} # python dictionary to store data
+    event_start, event_end = events_index_bounds(events_to_display, n_events)
 
+    events_dic = {'xproj': [], 'yproj': [], 'charge': [], 'time': []} # python dictionary to store data
+
+    
     print('2D projection...')
 
-    for event_index in range(n_events) :
+    for event_index in range(event_start, event_end) :
 
       if experiment == 'WCTE' : # WCTE is rotated in WCSim to have beam on the z axis, rotate it back to have cylinder axis on z axis like SK and HK, then rotate a tiny bit around z axis so as not to cut a column of PMTs in half (but also rotate the top and bottom caps though...)
       
@@ -126,14 +167,15 @@ def load_data(path2events, events_file, detector_geom, experiment) : # load data
       x2D, y2D = project2d(hitx[event_index], hity[event_index], hitz[event_index], detector_geom, experiment) 
       events_dic['xproj'].append(x2D)
       events_dic['yproj'].append(y2D)
-
+      events_dic['charge'].append(charge[event_index])
+      events_dic['time'].append(time[event_index])
 
     return events_dic, n_events
 
 
 # Tkinter GUI =======================================================================================================================
 
-def show_event_display(path2events, events_file, detector_geom, experiment): #plot event display with tkinter animation
+def show_event_display(path2events, events_file, detector_geom, experiment, events_to_display='all'): #plot event display with tkinter animation
 
   PMT_radius = detector_geom[experiment]['PMT_radius']
   cylinder_radius = detector_geom[experiment]['cylinder_radius']
@@ -143,7 +185,7 @@ def show_event_display(path2events, events_file, detector_geom, experiment): #pl
   if experiment == 'WCTE' : # make WCTE subPMTs smaller than what they really are, otherwise their spherical disposition will appear cramped when projected
     PMT_radius -= 2
 
-  events_dic, n_events = load_data(path2events, events_file, detector_geom, experiment)
+  events_dic, n_events = load_data(path2events, events_file, detector_geom, experiment, events_to_display = events_to_display)
 
   print('Opening display...')
 
@@ -151,13 +193,12 @@ def show_event_display(path2events, events_file, detector_geom, experiment): #pl
 
   def update_time_slider(event_index) : # update time slider according to event_slider
 
-    event_index = int(event_index)
+    event_index = int(event_index) - event_start
     time = times[event_index]
     time = np.sort(time)
 
     wt.config(from_=time[0], to=time[-1], resolution=(time[-1]-time[0])/100000)
     wt.set(times[event_index][-1])
-
 
   fig, ax = plt.subplots(figsize = (6,6))
 
@@ -179,6 +220,8 @@ def show_event_display(path2events, events_file, detector_geom, experiment): #pl
 
     # get event
     event_index = wE.get()
+    event_index -= event_start
+
     x2D, y2D, charge, time = events_dic['xproj'][event_index], events_dic['yproj'][event_index], events_dic['charge'][event_index], events_dic['time'][event_index]
 
     sorting_indices = np.argsort(time) # sort by time of trigger, so as to display them accordingly
@@ -201,8 +244,10 @@ def show_event_display(path2events, events_file, detector_geom, experiment): #pl
   toolbar = NavigationToolbar2Tk(canvas, root)
   toolbar.update()
 
+  event_start, event_end = events_index_bounds(events_to_display, n_events)
+
   # event slider =====================================================
-  wE = tk.Scale(root, from_=0, to=n_events-1, orient=tk.HORIZONTAL, command=plot)
+  wE = tk.Scale(root, from_=event_start, to=event_end-1, orient=tk.HORIZONTAL, command=plot)
   wE.pack()
   tk.Label(root, text = "event").pack()
 
@@ -212,6 +257,7 @@ def show_event_display(path2events, events_file, detector_geom, experiment): #pl
   tk.Label(root, text = "time").pack()
 
   wE.config(command=update_time_slider)
+  update_time_slider(event_start)
 
 
   def _quit():
@@ -226,7 +272,9 @@ def show_event_display(path2events, events_file, detector_geom, experiment): #pl
 
 # Main ===========================================================================================
 
-show_event_display(path2events, events_file, detector_geom, experiment)
+events_to_display = 'all' # 'all' to display all events, or tuple (event_start, event_end) to display all events between the event_start'th to the event_end'th events, or int event_index to only display the event_index'th event
+
+show_event_display(path2events, events_file, detector_geom, experiment, events_to_display=events_to_display)
   
   
 
