@@ -15,7 +15,7 @@ experiment = 'WCTE' # 'SK' or 'HK' or 'WCTE'
 path2events = '../Data/' + experiment + '/'
 events_file = '10_mu-_uni200-1000MeV_GPS.root'
 
-events_to_display = 'all' # 'all' to display all events, or tuple (event_start, event_end) to display all events between the event_start'th to the event_end'th events, or int event_index to only display the event_index'th event
+events_to_display = 8 # 'all' to display all events, or tuple (event_start, event_end) to display all events between the event_start'th to the event_end'th events, or int event_index to only display the event_index'th event
 
 
 
@@ -205,7 +205,7 @@ def show_event_display(path2events, events_file, detector_geom, experiment, even
 
   fig, ax = plt.subplots(figsize = (6,6))
 
-  def plot(string): # plot command to be called by tkinter slider
+  def plot(input): # plot command to be called by tkinter slider
 
     # set figure and axes
     ax.clear()
@@ -222,8 +222,28 @@ def show_event_display(path2events, events_file, detector_geom, experiment, even
     ax.add_patch(plt.Circle((0, zMin-cylinder_radius), cylinder_radius, fill=False))
 
     # get event
-    event_index = wE.get()
+    if input == 'event_slider':
+
+      event_index = wE.get()
+      wB.delete(0, tk.END)  # Clear any existing value
+      wB.insert(0, event_index) 
+      update_time_slider(event_index)
+    
+    elif input == 'entry_box':
+
+      event_index = int(wB.get())
+      wE.set(event_index)
+      update_time_slider(event_index)
+
+    elif input == 'time_slider':
+
+      event_index = wE.get()
+
+    else :
+      event_index = event_start
+
     event_index -= event_start
+
 
     x2D, y2D, charge, time = events_dic['xproj'][event_index], events_dic['yproj'][event_index], events_dic['charge'][event_index], events_dic['time'][event_index]
 
@@ -231,6 +251,7 @@ def show_event_display(path2events, events_file, detector_geom, experiment, even
     x2D, y2D, charge, time = x2D[sorting_indices], y2D[sorting_indices], charge[sorting_indices], time[sorting_indices]
 
     tmax = wt.get()
+
     x_before_t, y_before_t, charge_before_t = x2D[time < tmax], y2D[time < tmax], charge[time < tmax]
     ax.scatter(x_before_t, y_before_t, s=compute_PMT_marker_size(PMT_radius, fig, ax), c=rescale_color(charge_before_t), cmap='plasma')
 
@@ -249,17 +270,26 @@ def show_event_display(path2events, events_file, detector_geom, experiment, even
 
   event_start, event_end = events_index_bounds(events_to_display, n_events)
 
+  # entry box =========================================================
+
+  wB = tk.Entry(root)
+  wB.pack()
+  tk.Label(root, text='', width=2).pack()
+
+  button = tk.Button(root, text='Display Event', command=lambda : plot('entry_box'))
+  button.pack()
+
+
   # event slider =====================================================
-  wE = tk.Scale(root, from_=event_start, to=event_end-1, orient=tk.HORIZONTAL, command=plot)
+  wE = tk.Scale(root, from_=event_start, to=event_end-1, orient=tk.HORIZONTAL, command=lambda _: plot('event_slider'))
   wE.pack()
-  tk.Label(root, text = "event").pack()
+  tk.Label(root, text = 'Slide events').pack()
 
   # time slider =======================================================
-  wt = tk.Scale(root, orient=tk.HORIZONTAL, command=plot)
+  wt = tk.Scale(root, orient=tk.HORIZONTAL, command=lambda _: plot('time_slider'))
   wt.pack()
-  tk.Label(root, text = "time").pack()
+  tk.Label(root, text = 'Time').pack()
 
-  wE.config(command=update_time_slider)
   update_time_slider(event_start)
 
 

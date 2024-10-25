@@ -59,7 +59,7 @@
 /gps/ene/intercept 1
 
 
-/WCSimIO/RootFile ../outputs/WCTE/10_mu-_uni200-1000MeV_GPS.root
+/WCSimIO/RootFile ../outputs/WCTE/100_mu-_uni200-1000MeV_GPS.root
 
 /WCSimIO/SaveRooTracker 0
 
@@ -67,6 +67,6 @@
 #/WCSimIO/Timer false
 
 #/WCSim/random/seed 20230628
-/run/beamOn 10
+/run/beamOn 100
 #exit
 
